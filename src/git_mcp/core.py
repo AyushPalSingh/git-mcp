@@ -75,21 +75,20 @@ class GitStatus:
                 if file_details:
                     changes.append(f"{status} files:\n" + "\n".join(file_details))
 
-        prompt = f"""Analyze these repository changes and create a meaningful commit message:
-
-{'\n'.join(changes)}
-
-You are a git commit message expert. Based on the changes:
-1. What is the main purpose of these changes?
-2. What functionality is being modified?
-3. Are there any significant code changes?
-
-IMPORTANT: Return ONLY the commit message without any analysis or explanation or promt : .
-Format:
-- First line: type(scope): brief description
-- Optional second line: brief explanation if needed
-- Max 72 chars per line
-- Focus on the purpose of changes"""
+        prompt = (
+            f"Analyze these repository changes and create a meaningful commit message:\n\n"
+            f"{'\n'.join(changes)}\n\n"
+            "You are a git commit message expert. Based on the changes:\n"
+            "1. What is the main purpose of these changes?\n"
+            "2. What functionality is being modified?\n"
+            "3. Are there any significant code changes?\n\n"
+            "IMPORTANT: Return ONLY the commit message without any analysis or explanation.\n"
+            "Format:\n"
+            "- First line: type(scope): brief description\n"
+            "- Optional second line: brief explanation if needed\n"
+            "- Max 72 chars per line\n"
+            "- Focus on the purpose of changes"
+        )
 
         return prompt
 
