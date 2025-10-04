@@ -5,9 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "git-mcp"
 version = "0.1.0"
+description = "AI-powered Git commit message generator"
 requires-python = ">=3.8"
 dependencies = [
     "click>=8.0.0",
+    "google-generativeai>=0.3.0",
+    "setuptools>=45",
+    "wheel>=0.38.0"
 ]
 
 [project.scripts]
