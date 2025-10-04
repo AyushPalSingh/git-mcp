@@ -12,11 +12,21 @@ def edit_message(message: str) -> str:
     with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tf:
         tf.write(message)
         tf.flush()
-        editor = os.environ.get('EDITOR', 'notepad')
-        subprocess.run([editor, tf.name])
         
-        tf.seek(0)
-        edited_message = tf.read()
+        # Use git's configured editor, fallback to system default
+        try:
+            editor = subprocess.check_output(['git', 'config', 'core.editor'], 
+                                          text=True).strip()
+        except subprocess.CalledProcessError:
+            editor = os.environ.get('EDITOR', 'notepad' if os.name == 'nt' else 'nano')
+        
+        try:
+            subprocess.run([editor, tf.name], check=True)
+            with open(tf.name, 'r') as f:
+                edited_message = f.read().strip()
+        except subprocess.CalledProcessError:
+            print(f"Warning: Editor '{editor}' failed, keeping original message")
+            edited_message = message
     
     os.unlink(tf.name)
     return edited_message
