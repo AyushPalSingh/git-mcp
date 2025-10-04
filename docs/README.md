@@ -22,6 +22,6 @@ A tool that generates meaningful git commit messages using Gemini AI.
 ```bash
 git clone https://github.com/AyushPalSingh/git-mcp.git
 
-
+better to use this command for smooth experience :
 usage:
 pip install git+https://github.com/AyushPalSingh/git-mcp.git
